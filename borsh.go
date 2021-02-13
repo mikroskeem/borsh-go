@@ -239,6 +239,7 @@ func deserializeStruct(t reflect.Type, r io.Reader) (interface{}, error) {
 		if tag.Get("borsh_skip") == "true" {
 			continue
 		}
+
 		fieldMap[name] = i
 		fields = append(fields, name)
 	}

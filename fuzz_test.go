@@ -1,10 +1,11 @@
 package borsh_test
 
 import (
-	"github.com/ouromoros/borsh-go"
 	"math/rand"
 	"reflect"
 	"testing"
+
+	"github.com/mikroskeem/borsh-go"
 )
 
 func TestFuzz(t *testing.T) {
