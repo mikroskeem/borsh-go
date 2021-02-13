@@ -8,6 +8,7 @@ import (
 	"math"
 	"reflect"
 	"sort"
+	"strings"
 )
 
 // Deserialize `data` according to the schema of `s`, and store the value into it. `s` must be a pointer type variable
@@ -236,8 +237,27 @@ func deserializeStruct(t reflect.Type, r io.Reader) (interface{}, error) {
 		field := t.Field(i)
 		name := field.Name
 		tag := field.Tag
+
+		// Backwards compatibility
 		if tag.Get("borsh_skip") == "true" {
 			continue
+		}
+
+		tagArgs := strings.Split(tag.Get("borsh"), ",")
+		if len(tagArgs) > 0 {
+			if n := tagArgs[0]; n != "" {
+				if n == "-" {
+					continue
+				}
+				name = n
+			}
+			if len(tagArgs) > 1 {
+				for _, arg := range tagArgs[1:] {
+					switch arg {
+					// None yet
+					}
+				}
+			}
 		}
 
 		fieldMap[name] = i
